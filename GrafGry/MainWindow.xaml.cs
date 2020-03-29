@@ -20,8 +20,14 @@ namespace GrafGry
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Tree<int> myLittleTree;
+        private Tree<int> minMaxedTree;
+
         public MainWindow()
         {
+            myLittleTree = null;
+            minMaxedTree = null;
+
             InitializeComponent();
         }
 
@@ -43,9 +49,19 @@ namespace GrafGry
             int[] antTokens = TextToIntArray(AntagonistTokens.Text);
             int endingScore = int.Parse(DrawScore.Text);
 
-            Tree<int> myLittleTree = Tree<int>.GenerateLittleEye(startingPlayer, protTokens, antTokens, endingScore);
+            myLittleTree = Tree<int>.GenerateLittleEye(startingPlayer, protTokens, antTokens, endingScore);
 
             GraphVisCode.Text = myLittleTree.ToString();
+        }
+
+        private void MinMaxButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (myLittleTree != null)
+            {
+                minMaxedTree = myLittleTree.MinMax();
+
+                GraphVisCode.Text = minMaxedTree.ToString();
+            }
         }
     }
 }
